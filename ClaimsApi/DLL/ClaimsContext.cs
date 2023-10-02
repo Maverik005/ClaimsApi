@@ -17,7 +17,9 @@ namespace ClaimsApi.DLL
         public DbSet<Manufacturer> Manufacturers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Claims>().ToTable(nameof(Claims));
+            modelBuilder.Entity<Claims>()
+                .Property(cl => cl.IsDeleted)
+                .HasDefaultValueSql("1");
             modelBuilder.Entity<ClaimType>().ToTable(nameof(ClaimType));
             modelBuilder.Entity<ClaimUserDetails>().ToTable(nameof(ClaimUserDetails));
             modelBuilder.Entity<ClaimVehicleDetails>().ToTable(nameof(ClaimVehicleDetails));

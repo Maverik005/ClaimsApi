@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ClaimsContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClaimsDB")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddSingleton<IConfigDataBll,ConfigDataBll>();
+builder.Services.AddSingleton<IClaimBll,ClaimBll>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
