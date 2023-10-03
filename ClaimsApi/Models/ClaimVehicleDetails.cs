@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace ClaimsApi.Models
 {
@@ -13,6 +14,8 @@ namespace ClaimsApi.Models
         public int KilometersDriven { get; set; }
         public DateTime DateOfPurchase { get; set; }
         public double PurchasePrise { get; set; }
+
+        [JsonIgnore]
         public Claims Claims { get; set; }
           
     }

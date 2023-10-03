@@ -1,4 +1,6 @@
-﻿namespace ClaimsApi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace ClaimsApi.Models
 {
     public class ClaimUserDetails
     {
@@ -13,8 +15,14 @@
         public int CellPhoneNo { get; set; }
         public int HouseNo { get; set; }
         public string StreetName { get; set; }
+
+        [JsonIgnore]
         public State State { get; set; }
+
+        [JsonIgnore]
         public Country Country { get; set; }
+
+        [JsonIgnore]
         public Claims Claims { get; set; }
     }
 }
