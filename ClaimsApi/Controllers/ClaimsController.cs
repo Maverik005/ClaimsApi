@@ -4,6 +4,9 @@ using ClaimsApi.Models;
 using ClaimsApi.DTO;
 using ClaimsApi.Interfaces;
 using ClaimsApi.BLL;
+using ClaimsApi.Helper;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClaimsApi.Controllers
 {
@@ -20,12 +23,15 @@ namespace ClaimsApi.Controllers
         public async Task<IActionResult> GetAllClaims() {
             List<ClaimDto> lstClaims = await _claimBll.GetAllClaims();
             return Ok(lstClaims);
-        } 
+        }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddClaim([FromBody] ClaimDto claim) {
+            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
             bool success = _claimBll.AddClaim(claim);
-            if (!success) { return this.Problem("Claim was not saved."); }
+            if (!success) { return this.Problem("Claim was not saved."); }   
             return this.Ok(success); //Maybe it's a good idea to return the saved object
         }
 
@@ -37,7 +43,14 @@ namespace ClaimsApi.Controllers
             return Ok(isDeleted);
         }
 
-        [HttpPatch]
-        public void UpdateClaim([FromBody] ClaimDto claim) {   }
+        [Route("/updateClaim")]
+        [HttpPost]
+        public IActionResult UpdateClaim([FromBody] ClaimDto claim) {
+            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
+            bool isUpdated =  _claimBll.UpdateClaim(claim);
+            if (!isUpdated) { return this.Problem("Claim cannot be updated"); }
+            return Ok(isUpdated);
+        }
     }
 }

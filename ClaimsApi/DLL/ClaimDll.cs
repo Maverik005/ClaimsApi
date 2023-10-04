@@ -1,5 +1,5 @@
 ﻿using ClaimsApi.DTO;
-using ClaimsApi.Helper;
+using ClaimsApi.Helper.Helper;
 using ClaimsApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
@@ -12,9 +12,9 @@ namespace ClaimsApi.DLL
         {
             List<Claims> lstClaims = new List<Claims>();
             using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions())) { 
-                lstClaims = await claimsCtx.UserClaims
-                            .Include(cl => cl.UserDetails)
-                            .Include(cl => cl.VehicleDetails)
+                lstClaims = await claimsCtx.Claims
+                            .Include(cl => cl.ClaimUserDetails)
+                            .Include(cl => cl.ClaimVehicleDetails)
                             .ToListAsync();
                 return lstClaims;
             }
@@ -29,9 +29,10 @@ namespace ClaimsApi.DLL
                     ClaimTitle = claim.ClaimTitle,
                     ClaimManager = claim.ClaimManager,
                     ClaimTypeId = claim.ClaimTypeId,
+                    IsDeleted = false
                 };
 
-                newClaim.UserDetails = new ClaimUserDetails
+                newClaim.ClaimUserDetails = new ClaimUserDetails
                 {
                     Email = claim.Email,
                     FirstName = claim.FirstName,
@@ -44,7 +45,7 @@ namespace ClaimsApi.DLL
                     CountryId = claim.CountryId,
                 };
 
-                newClaim.VehicleDetails = new ClaimVehicleDetails
+                newClaim.ClaimVehicleDetails = new ClaimVehicleDetails
                 {
                     VehicleFIN = claim.VehicleFIN,
                     ManufacturerId = claim.ManufacturerId,
@@ -57,6 +58,7 @@ namespace ClaimsApi.DLL
 
                 claimsCtx.Add(newClaim);
                 claimsCtx.SaveChanges();
+                isSaved = true;
             }
             return isSaved; 
         }
@@ -66,11 +68,24 @@ namespace ClaimsApi.DLL
             int rowsUpdated = 0;
             using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions()))
             {
-                rowsUpdated = claimsCtx.UserClaims
+                rowsUpdated = claimsCtx.Claims
                     .Where(cl => cl.Id == claimId)
                     .ExecuteUpdate(rec => rec.SetProperty(uc => uc.IsDeleted, true));
                 if(rowsUpdated > 0) { isDeleted = true; }
                 return isDeleted;
+            }
+        }
+
+        public bool UpdateClaim( Claims claim)
+        {
+            using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions()))
+            {
+                bool isUpdated = false;
+                int rowsUpdated = 0;
+                claimsCtx.Attach(claim);
+                rowsUpdated = claimsCtx.SaveChanges();
+                if(rowsUpdated > 0) { isUpdated = true; }
+                return isUpdated;
             }
         }
     }

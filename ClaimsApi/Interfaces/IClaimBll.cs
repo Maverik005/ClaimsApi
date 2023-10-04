@@ -7,5 +7,6 @@ namespace ClaimsApi.Interfaces
         public bool AddClaim(ClaimDto claim);
         public bool DeleteClaim(int claimId);
         public Task<List<ClaimDto>> GetAllClaims();
+        public bool UpdateClaim(ClaimDto claimObj);
     }
 }

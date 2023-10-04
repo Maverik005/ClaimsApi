@@ -7,13 +7,13 @@ namespace ClaimsApi.DLL
     {
         public ClaimsContext(DbContextOptions<ClaimsContext> options): base(options) { }
 
-        public DbSet<Claims> UserClaims { get; set; }
+        public DbSet<Claims> Claims { get; set; }
         public DbSet<ClaimType> ClaimTypes { get; set; }
-        public DbSet<ClaimUserDetails> UserDetails { get; set; }
-        public DbSet<ClaimVehicleDetails> VehicleDetails { get; set; }
+        public DbSet<ClaimUserDetails> ClaimUserDetails { get; set; }
+        public DbSet<ClaimVehicleDetails> ClaimVehicleDetails { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<VehicleModels> Models { get; set; }
+        public DbSet<VehicleModels> VehicleModels { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

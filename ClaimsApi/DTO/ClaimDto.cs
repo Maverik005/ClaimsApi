@@ -5,7 +5,7 @@
         public int? Id { get; set; }
         public string ClaimTitle { get; set; }
         public int ClaimTypeId { get; set; }
-        public string ClaimManager { get; set; }
+        public string? ClaimManager { get; set; }
         public int? UserId { get; set; }
         public int CountryId { get; set; }
         public int StateId { get; set; }

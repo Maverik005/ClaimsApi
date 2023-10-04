@@ -1,5 +1,5 @@
 ﻿using ClaimsApi.Models;
-using ClaimsApi.Helper;
+using ClaimsApi.Helper.Helper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimsApi.DLL
@@ -38,7 +38,7 @@ namespace ClaimsApi.DLL
             using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions()))
             {
                 var lstModels = new List<VehicleModels>();
-                lstModels = claimsCtx.Models.AsNoTracking() .Where(m=> m.ManufacturerId == manufacturerId).ToList();
+                lstModels = claimsCtx.VehicleModels.AsNoTracking() .Where(m=> m.ManufacturerId == manufacturerId).ToList();
                 return lstModels;
             }
         }

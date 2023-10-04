@@ -2,7 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClaimsApi.Helper
+namespace ClaimsApi.Helper.Helper
 {
     public static class DBContextHelper
     {

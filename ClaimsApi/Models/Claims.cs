@@ -12,8 +12,8 @@ namespace ClaimsApi.Models
 
         [JsonIgnore]
         public ClaimType ClaimType { get; set;}
-        public ClaimUserDetails UserDetails { get; set; }
-        public ClaimVehicleDetails VehicleDetails { get; set; } 
+        public ClaimUserDetails ClaimUserDetails { get; set; }
+        public ClaimVehicleDetails ClaimVehicleDetails { get; set; } 
 
     }
 }
