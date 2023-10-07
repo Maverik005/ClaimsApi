@@ -25,14 +25,14 @@ namespace ClaimsApi.Controllers
             return Ok(lstClaims);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public IActionResult AddClaim([FromBody] ClaimDto claim) {
-            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-            claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
-            bool success = _claimBll.AddClaim(claim);
-            if (!success) { return this.Problem("Claim was not saved."); }   
-            return this.Ok(success); //Maybe it's a good idea to return the saved object
+            //ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            //claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
+            int newId = _claimBll.AddClaim(claim);
+            if (newId == 0) { return this.Problem("Claim was not saved."); }   
+            return this.Ok(newId); //Maybe it's a good idea to return the saved object
         }
 
         [Route("/deleteClaim/{claimId}")]
@@ -46,10 +46,9 @@ namespace ClaimsApi.Controllers
         [Route("/updateClaim")]
         [HttpPost]
         public IActionResult UpdateClaim([FromBody] ClaimDto claim) {
-            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-            claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
+            //ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            //claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
             bool isUpdated =  _claimBll.UpdateClaim(claim);
-            if (!isUpdated) { return this.Problem("Claim cannot be updated"); }
             return Ok(isUpdated);
         }
     }

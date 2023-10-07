@@ -13,15 +13,16 @@ namespace ClaimsApi.DLL
             List<Claims> lstClaims = new List<Claims>();
             using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions())) { 
                 lstClaims = await claimsCtx.Claims
+                            .Where(c => c.IsDeleted == false)
                             .Include(cl => cl.ClaimUserDetails)
                             .Include(cl => cl.ClaimVehicleDetails)
                             .ToListAsync();
                 return lstClaims;
             }
         }
-        public bool SaveClaim(ClaimDto claim)
+        public int SaveClaim(ClaimDto claim)
         {
-            bool isSaved = false;
+            int claimId = 0;
             using (var claimsCtx = new ClaimsContext(DBContextHelper.GetDbContextOptions()))
             {
                 var newClaim = new Claims
@@ -40,6 +41,7 @@ namespace ClaimsApi.DLL
                     CellPhoneNo = claim.CellPhoneNo,
                     HouseNo = claim.HouseNo,
                     StreetName = claim.StreetName,
+                    Pincode = claim.Pincode,
                     City = claim.City,
                     StateId = claim.StateId,
                     CountryId = claim.CountryId,
@@ -58,9 +60,9 @@ namespace ClaimsApi.DLL
 
                 claimsCtx.Add(newClaim);
                 claimsCtx.SaveChanges();
-                isSaved = true;
+                claimId = newClaim.Id;
             }
-            return isSaved; 
+            return claimId; 
         }
 
         public bool DeleteClaim(int claimId) {
@@ -82,7 +84,7 @@ namespace ClaimsApi.DLL
             {
                 bool isUpdated = false;
                 int rowsUpdated = 0;
-                claimsCtx.Attach(claim);
+                claimsCtx.Claims.Update(claim);
                 rowsUpdated = claimsCtx.SaveChanges();
                 if(rowsUpdated > 0) { isUpdated = true; }
                 return isUpdated;

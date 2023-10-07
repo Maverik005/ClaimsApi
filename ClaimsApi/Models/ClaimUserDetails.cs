@@ -9,6 +9,7 @@ namespace ClaimsApi.Models
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public string City { get; set; }
+        public string Pincode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

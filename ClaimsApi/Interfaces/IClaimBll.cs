@@ -4,7 +4,7 @@ namespace ClaimsApi.Interfaces
 {
     public interface IClaimBll
     {
-        public bool AddClaim(ClaimDto claim);
+        public int AddClaim(ClaimDto claim);
         public bool DeleteClaim(int claimId);
         public Task<List<ClaimDto>> GetAllClaims();
         public bool UpdateClaim(ClaimDto claimObj);

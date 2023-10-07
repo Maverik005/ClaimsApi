@@ -19,7 +19,7 @@ namespace ClaimsApi.DLL
         {
             modelBuilder.Entity<Claims>()
                 .Property(cl => cl.IsDeleted)
-                .HasDefaultValueSql("1");
+                .HasDefaultValueSql("0");
             modelBuilder.Entity<ClaimType>().ToTable(nameof(ClaimType));
             modelBuilder.Entity<ClaimUserDetails>().ToTable(nameof(ClaimUserDetails));
             modelBuilder.Entity<ClaimVehicleDetails>().ToTable(nameof(ClaimVehicleDetails));

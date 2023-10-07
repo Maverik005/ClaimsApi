@@ -8,14 +8,14 @@ namespace ClaimsApi.BLL
 {
     public class ClaimBll : IClaimBll
     {
-        public bool AddClaim(ClaimDto claim)
+        public int AddClaim(ClaimDto claim)
         {
             try
             {
-                bool isSaved = false;
+                int claimId = 0;
                 ClaimDll dllObj = new ClaimDll();
-                isSaved = dllObj.SaveClaim(claim);
-                return isSaved;
+                claimId = dllObj.SaveClaim(claim);
+                return claimId;
             }
             catch (Exception)
             {
@@ -67,6 +67,7 @@ namespace ClaimsApi.BLL
                     claimObj.HouseNo = claim.ClaimUserDetails.HouseNo;
                     claimObj.StreetName = claim.ClaimUserDetails.StreetName;
                     claimObj.City = claim.ClaimUserDetails.City;
+                    claimObj.Pincode = claim.ClaimUserDetails.Pincode;
                     claimObj.StateId = claim.ClaimUserDetails.StateId;
                     claimObj.CountryId = claim.ClaimUserDetails.CountryId;
                     claimObj.UserId = claim.ClaimUserDetails.Id;
@@ -111,6 +112,7 @@ namespace ClaimsApi.BLL
                 claim.ClaimUserDetails.CellPhoneNo = claimObj.CellPhoneNo;
                 claim.ClaimUserDetails.HouseNo = claimObj.HouseNo;
                 claim.ClaimUserDetails.StreetName = claimObj.StreetName;
+                claim.ClaimUserDetails.Pincode = claimObj.Pincode;
                 claim.ClaimUserDetails.City = claimObj.City;
                 claim.ClaimUserDetails.StateId = claimObj.StateId;
                 claim.ClaimUserDetails.CountryId = claimObj.CountryId;
