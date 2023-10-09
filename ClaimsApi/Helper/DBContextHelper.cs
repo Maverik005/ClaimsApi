@@ -13,7 +13,7 @@ namespace ClaimsApi.Helper.Helper
                 .Build();
 
             return new DbContextOptionsBuilder<ClaimsContext>()
-                .UseSqlServer(new SqlConnection(configuration.GetConnectionString("ClaimsDB"))).Options;
+                .UseSqlServer(new SqlConnection(configuration.GetConnectionString("AzureDB"))).Options;
         }
     }
 }
