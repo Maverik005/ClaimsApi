@@ -20,10 +20,10 @@ builder.Services.AddSingleton<IConfigDataBll,ConfigDataBll>();
 builder.Services.AddSingleton<IClaimBll,ClaimBll>();
 var app = builder.Build();
 
+app.UseSwagger();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 app.UseCors(options =>
