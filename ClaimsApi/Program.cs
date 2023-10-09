@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ClaimsContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClaimsDB")));
+builder.Services.AddDbContext<ClaimsContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDB")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddSingleton<IConfigDataBll,ConfigDataBll>();
 builder.Services.AddSingleton<IClaimBll,ClaimBll>();
