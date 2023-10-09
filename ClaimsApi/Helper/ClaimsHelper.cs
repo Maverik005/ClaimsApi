@@ -9,7 +9,7 @@ namespace ClaimsApi.Helper
             try
             {
                 string userEmail = string.Empty;
-                userEmail = principal.FindFirstValue(ClaimTypes.Email).ToString();
+                userEmail = principal.FindFirstValue(ClaimTypes.Name).ToString();
                 return userEmail;
             }
             catch (Exception)

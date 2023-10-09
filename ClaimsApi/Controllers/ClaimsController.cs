@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ClaimsApi.Models;
 using ClaimsApi.DTO;
 using ClaimsApi.Interfaces;
-using ClaimsApi.BLL;
-using ClaimsApi.Helper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
@@ -19,22 +16,24 @@ namespace ClaimsApi.Controllers
             _claimBll = claimBll;
         }
 
+        [Authorize(Roles = "DieselClaimManager,admin,ClaimManager")]
         [HttpGet]
         public async Task<IActionResult> GetAllClaims() {
             List<ClaimDto> lstClaims = await _claimBll.GetAllClaims();
             return Ok(lstClaims);
         }
 
-        //[Authorize]
+        [Authorize(Roles = "DieselClaimManager,admin")]
         [HttpPost]
         public IActionResult AddClaim([FromBody] ClaimDto claim) {
-            //ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
             //claim.ClaimManager = ClaimsHelper.GetLoggedInUserEmail(principal);
             int newId = _claimBll.AddClaim(claim);
             if (newId == 0) { return this.Problem("Claim was not saved."); }   
             return this.Ok(newId); //Maybe it's a good idea to return the saved object
         }
 
+        [Authorize(Roles = "DieselClaimManager,admin")]
         [Route("/deleteClaim/{claimId}")]
         [HttpDelete]
         public IActionResult DeleteClaim(int claimId) {
@@ -43,6 +42,7 @@ namespace ClaimsApi.Controllers
             return Ok(isDeleted);
         }
 
+        [Authorize(Roles = "DieselClaimManager,admin")]
         [Route("/updateClaim")]
         [HttpPost]
         public IActionResult UpdateClaim([FromBody] ClaimDto claim) {

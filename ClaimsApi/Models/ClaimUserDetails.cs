@@ -13,7 +13,7 @@ namespace ClaimsApi.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int CellPhoneNo { get; set; }
+        public string CellPhoneNo { get; set; }
         public int HouseNo { get; set; }
         public string StreetName { get; set; }
 
